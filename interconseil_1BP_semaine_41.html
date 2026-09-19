@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interconseil des 1BP semaine 41</title>
+  <style>
+    :root {
+      --primary: #1f4e79;
+      --primary-dark: #173a5c;
+      --bg: #f4f7fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --success: #166534;
+      --error: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 28px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 0 0 22px;
+    }
+
+    legend {
+      font-weight: 700;
+      padding: 0 8px;
+      color: var(--primary);
+    }
+
+    label { cursor: pointer; }
+
+    .name-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .day-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .day-option:has(input:checked) {
+      border-color: var(--primary);
+      background: #eef5fb;
+    }
+
+    .day-block {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .day-block h3 {
+      margin: 0 0 12px;
+      color: var(--primary-dark);
+    }
+
+    .time-options {
+      display: grid;
+      gap: 9px;
+    }
+
+    .time-option {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      border-radius: 7px;
+      background: #f8fafc;
+    }
+
+    .hidden { display: none; }
+
+    .required {
+      color: var(--error);
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover { background: var(--primary-dark); }
+
+    button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 13px 15px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfce7;
+      color: var(--success);
+    }
+
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: var(--error);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 20px; }
+      h1 { font-size: 23px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Interconseil des 1BP semaine 41</h1>
+      <p class="intro">
+        Merci d’indiquer votre nom, les jours où vous êtes disponible,
+        puis le ou les créneaux horaires correspondant à vos disponibilités.
+      </p>
+
+      <!--
+        IMPORTANT :
+        Remplacez l'attribut action ci-dessous par l'URL de votre formulaire Formspree.
+        Exemple : https://formspree.io/f/xxxxxxxx
+      -->
+      <form id="availabilityForm"
+            action="https://formspree.io/f/REMPLACEZ-MOI"
+            method="POST">
+
+        <fieldset>
+          <legend>1. Votre identité</legend>
+          <label for="nom"><strong>Nom et prénom <span class="required">*</span></strong></label>
+          <input
+            class="name-input"
+            type="text"
+            id="nom"
+            name="nom"
+            placeholder="Ex. Marie Dupont"
+            required
+            autocomplete="name"
+          >
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Vos jours disponibles</legend>
+          <p><strong>Cochez tous les jours où vous êtes disponible :</strong> <span class="required">*</span></p>
+
+          <div class="days">
+            <label class="day-option">
+              <input type="checkbox" name="jours[]" value="Lundi" data-day="lundi">
+              Lundi
+            </label>
+            <label class="day-option">
+              <input type="checkbox" name="jours[]" value="Mardi" data-day="mardi">
+              Mardi
+            </label>
+            <label class="day-option">
+              <input type="checkbox" name="jours[]" value="Mercredi" data-day="mercredi">
+              Mercredi
+            </label>
+            <label class="day-option">
+              <input type="checkbox" name="jours[]" value="Jeudi" data-day="jeudi">
+              Jeudi
+            </label>
+            <label class="day-option">
+              <input type="checkbox" name="jours[]" value="Vendredi" data-day="vendredi">
+              Vendredi
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Vos créneaux disponibles</legend>
+          <p>
+            Pour chaque jour sélectionné, choisissez votre ou vos créneaux disponibles.
+          </p>
+
+          <div id="noDayMessage" class="note">
+            Sélectionnez au moins un jour ci-dessus pour afficher les créneaux correspondants.
+          </div>
+
+          <div id="lundi" class="day-block hidden">
+            <h3>Lundi</h3>
+            <div class="time-options">
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_lundi[]" value="11h30–12h30">
+                11h30 – 12h30
+              </label>
+            </div>
+          </div>
+
+          <div id="mardi" class="day-block hidden">
+            <h3>Mardi</h3>
+            <div class="time-options">
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_mardi[]" value="11h30–12h30">
+                11h30 – 12h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_mardi[]" value="13h40–14h30">
+                13h40 – 14h30
+              </label>
+            </div>
+          </div>
+
+          <div id="mercredi" class="day-block hidden">
+            <h3>Mercredi</h3>
+            <div class="time-options">
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_mercredi[]" value="11h30–12h30">
+                11h30 – 12h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_mercredi[]" value="15h40–16h30">
+                15h40 – 16h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_mercredi[]" value="16h30–17h30">
+                16h30 – 17h30
+              </label>
+            </div>
+          </div>
+
+          <div id="jeudi" class="day-block hidden">
+            <h3>Jeudi</h3>
+            <div class="time-options">
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_jeudi[]" value="11h30–12h30">
+                11h30 – 12h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_jeudi[]" value="12h30–13h30">
+                12h30 – 13h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_jeudi[]" value="15h30–16h30">
+                15h30 – 16h30
+              </label>
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_jeudi[]" value="16h30–17h30">
+                16h30 – 17h30
+              </label>
+            </div>
+          </div>
+
+          <div id="vendredi" class="day-block hidden">
+            <h3>Vendredi</h3>
+            <div class="time-options">
+              <label class="time-option">
+                <input type="checkbox" name="creneaux_vendredi[]" value="12h30–13h30">
+                12h30 – 13h30
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <button type="submit" id="submitButton">Envoyer mes disponibilités</button>
+        <div id="message" class="message"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("availabilityForm");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+    const noDayMessage = document.getElementById("noDayMessage");
+
+    const dayCheckboxes = document.querySelectorAll('input[type="checkbox"][data-day]');
+
+    function updateDayBlocks() {
+      let selectedCount = 0;
+
+      dayCheckboxes.forEach(dayCheckbox => {
+        const day = dayCheckbox.dataset.day;
+        const block = document.getElementById(day);
+        const timeInputs = block.querySelectorAll('input[type="checkbox"]');
+
+        if (dayCheckbox.checked) {
+          selectedCount++;
+          block.classList.remove("hidden");
+          timeInputs.forEach(input => input.disabled = false);
+        } else {
+          block.classList.add("hidden");
+          timeInputs.forEach(input => {
+            input.checked = false;
+            input.disabled = true;
+          });
+        }
+      });
+
+      noDayMessage.style.display = selectedCount === 0 ? "block" : "none";
+    }
+
+    dayCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", updateDayBlocks);
+    });
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const selectedDays = [...dayCheckboxes].filter(c => c.checked);
+
+      if (selectedDays.length === 0) {
+        message.className = "message error";
+        message.textContent = "Veuillez sélectionner au moins un jour.";
+        return;
+      }
+
+      // Vérifie qu'au moins un créneau est sélectionné pour chaque jour choisi.
+      for (const dayCheckbox of selectedDays) {
+        const day = dayCheckbox.dataset.day;
+        const block = document.getElementById(day);
+        const selectedTimes = [...block.querySelectorAll('input[type="checkbox"]')]
+          .filter(input => input.checked);
+
+        if (selectedTimes.length === 0) {
+          message.className = "message error";
+          message.textContent = "Veuillez sélectionner au moins un créneau pour chaque jour choisi.";
+          block.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Envoi en cours…";
+      message.className = "message";
+      message.textContent = "";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "Accept": "application/json" }
+        });
+
+        if (response.ok) {
+          form.reset();
+          updateDayBlocks();
+          message.className = "message success";
+          message.textContent = "Votre réponse a bien été enregistrée. Merci !";
+        } else {
+          throw new Error("Erreur lors de l'envoi.");
+        }
+      } catch (error) {
+        message.className = "message error";
+        message.textContent =
+          "Impossible d'envoyer la réponse. Vérifiez la configuration du formulaire ou réessayez.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Envoyer mes disponibilités";
+      }
+    });
+
+    updateDayBlocks();
+  </script>
+</body>
+</html>
